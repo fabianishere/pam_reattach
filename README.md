@@ -1,4 +1,6 @@
-# pam\_reattach
+pam\_reattach
+[![Build Status](https://travis-ci.org/fabianishere/pam_reattach.svg?branch=master)](https://travis-ci.org/fabianishere/pam_reattach)
+=============
 This is a PAM module for reattaching to the authenticating user's per-session
 bootstrap namespace on macOS (See [TN2083](https://developer.apple.com/library/archive/technotes/tn2083/_index.html) about bootstrap namespace). 
 This allows users to make use of the `pam_tid` module (Touch ID) from within tmux.

@@ -11,4 +11,4 @@ set(CMAKE_SHARED_MODULE_PREFIX "")
 add_library(pam_reattach MODULE src/xpc.h src/bootstrap.h src/pam_reattach.c)
 target_link_libraries(pam_reattach pam)
 install(TARGETS pam_reattach DESTINATION lib/pam)
-
+install(FILES man/pam_reattach.8 DESTINATION "share/man/man8")

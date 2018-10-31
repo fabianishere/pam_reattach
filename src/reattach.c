@@ -22,40 +22,14 @@
  * THE SOFTWARE.
  */
 
-#define PAM_SM_AUTH
-#include <security/pam_modules.h>
-#include <security/pam_appl.h>
-
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <pwd.h>
-
 #include "bootstrap.h"
 #include "xpc.h"
 
-PAM_EXTERN int
-pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
+#include <reattach.h>
+
+int reattach_aqua(uid_t uid)
 {
 	int err;
-	char buffer[2 * PATH_MAX];
-	const char *username;
-	struct passwd *pwd;
-	struct passwd pwdbuf;
-	uid_t uid, suid;
-
-	/* Get the username (and UID) */
-	if ((err = pam_get_user(pamh, &username, NULL)) != PAM_SUCCESS) {
-		openpam_log(PAM_LOG_ERROR, "The username could not be obtained: %d %s", err, pam_strerror(pamh, err));
-		return PAM_USER_UNKNOWN;
-	}
-	if (getpwnam_r(username, &pwdbuf, buffer, sizeof(buffer), &pwd) != 0) {
-		openpam_log(PAM_LOG_ERROR, "The pwd for %s could not be obtained", username);
-		return PAM_USER_UNKNOWN;
-	}
-	uid = pwd->pw_uid;
-
-	openpam_log(PAM_LOG_DEBUG, "Going to switch to (%s) %u's Aqua bootstrap namespace", username, uid);
 
 	xpc_object_t dict = xpc_dictionary_create(NULL, NULL, 0);
 
@@ -70,20 +44,16 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 
 	/* Obtain the user's Aqua bootstrap port */
 	if ((err = xpc_pipe_routine(pipe, dict, &reply)) != 0) {
-		openpam_log(PAM_LOG_ERROR, "Failed to obtain Aqua bootstrap port: %d %s", err, strerror(err));
-
 		xpc_release(pipe);
 		xpc_release(dict);
 
-		return PAM_SERVICE_ERR;
+		return err;
 	} else if ((err = xpc_dictionary_get_int64(reply, "error")) != 0) {
-		openpam_log(PAM_LOG_ERROR, "Failed to obtain Aqua bootstrap port: %d %s", err, strerror(err));
-
 		xpc_release(dict);
 		xpc_release(pipe);
 		xpc_release(reply);
 
-		return PAM_SERVICE_ERR;
+		return err;
 	}
 
 	mach_port_t puc = xpc_dictionary_copy_mach_send(reply, "bootstrap");
@@ -99,12 +69,5 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 	xpc_release(pipe);
 	xpc_release(reply);
 
-	return PAM_SUCCESS;
+	return 0;
 }
-
-PAM_EXTERN int
-pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
-{
-	return PAM_SUCCESS;
-}
-

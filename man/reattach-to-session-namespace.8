@@ -1,0 +1,21 @@
+.Dd October 31, 2018
+.Dt reattach-to-session-namespace 8
+.Os Mach
+.Sh NAME
+.Nm reattach-to-session-namespace
+.Nd utility to reattach to user's per-session bootstrap namespace
+.Sh SYNOPSIS
+.Nm
+.Op Fl u
+<program>
+.Op Fl args...
+.Sh DESCRIPTION
+A command line utility that will execute the specified command in the user's
+per-session bootstrap namespace.
+.Pp
+.Sh FLAGS
+.Bl -tag -width -indent
+.It Fl u | -uid
+The user id of the session to attach to.
+.El
+.Pp

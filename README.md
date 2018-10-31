@@ -17,7 +17,8 @@ auth     sufficient   pam_tid.so
 ...
 ```
 
-Make sure you have the module installed.
+Make sure you have the module installed. For further information, see
+`reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
 
 ## Installation
 The module is built using [CMake](https://cmake.org). Enter the following
@@ -30,6 +31,18 @@ $ make
 $ sudo make install
 ```
 
+## Deinstallation
+Make sure you **keep** the generated `install_manifest.txt` file in the build folder
+after installation. Run the following command in your command prompt to remove
+the installation from your system:
+
+```sh
+$ sudo xargs rm < install_manifest.txt
+```
+
+## Additional Tools
+Additionally, one can build a `reattach-to-session-namespace` command line
+utility by specifying the `-DENABLE_CLI=ON` option when calling CMake.
 
 ## License
 The code is released under the MIT license. See the `LICENSE.txt` file.

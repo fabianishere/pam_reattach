@@ -22,20 +22,15 @@
  * THE SOFTWARE.
  */
 
-#ifndef REATTACH_XPC_H
-#define REATTACH_XPC_H
+#ifndef REATTACH_H
+#define REATTACH_H
 
-#include <mach/mach.h>
-#include <xpc/xpc.h>
+/**
+ * Reattach to the specified user's per-session bootstrap namespace (Aqua).
+ *
+ * @param[in] uid The user id of the user of the session to reattach to.
+ * @return <code>0</code> on success, some other value on failure. See errno(3).
+ */
+int reattach_aqua(uid_t uid);
 
-typedef struct _xpc_pipe_s* xpc_pipe_t;
-
-xpc_pipe_t xpc_pipe_create_from_port(mach_port_t port, int flags);
-
-mach_port_t xpc_dictionary_copy_mach_send(xpc_object_t dict, const char *name);
-
-int xpc_pipe_routine(xpc_pipe_t pipe,
-                     xpc_object_t request,
-                     xpc_object_t *reply);
-
-#endif /* REATTACH_XPC_H */
+#endif /* REATTACH_H */

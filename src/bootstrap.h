@@ -22,12 +22,12 @@
  * THE SOFTWARE.
  */
 
+#ifndef REATTACH_BOOTSTRAP_H
+#define REATTACH_BOOTSTRAP_H
+
 #include <mach/mach.h>
 #include <servers/bootstrap.h>
 
-#ifndef PAM_REATTACH_BOOTSTRAP
-#define PAM_REATTACH_BOOTSTRAP
-
 kern_return_t bootstrap_get_root(mach_port_t bp, mach_port_t *root);
 
-#endif /* PAM_REATTACH_BOOTSTRAP */
+#endif /* REATTACH_BOOTSTRAP_H */

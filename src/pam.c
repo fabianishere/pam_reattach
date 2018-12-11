@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <pwd.h>
@@ -38,11 +37,11 @@ PAM_EXTERN int
 pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
 	int err;
-	char buffer[2 * PATH_MAX];
 	const char *username;
+	char buffer[2 * PATH_MAX];
 	struct passwd *pwd;
 	struct passwd pwdbuf;
-	uid_t uid, suid;
+	uid_t uid;
 
 	/* Get the username (and UID) */
 	if ((err = pam_get_user(pamh, &username, NULL)) != PAM_SUCCESS) {
@@ -50,7 +49,7 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 		return PAM_USER_UNKNOWN;
 	}
 	if (getpwnam_r(username, &pwdbuf, buffer, sizeof(buffer), &pwd) != 0) {
-		openpam_log(PAM_LOG_ERROR, "The pwd for %s could not be obtained", username);
+		openpam_log(PAM_LOG_ERROR, "The password file entry for %s could not be obtained", username);
 		return PAM_USER_UNKNOWN;
 	}
 	uid = pwd->pw_uid;
@@ -67,8 +66,8 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 }
 
 PAM_EXTERN int
-pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
+pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-	return PAM_SUCCESS;
+	return PAM_IGNORE;
 }
 

@@ -29,7 +29,7 @@ the module:
 ```bash
 $ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local <PATH-TO-SOURCE>
 $ make
-$ sudo make install
+$ make install
 ```
 
 ## Deinstallation
@@ -38,7 +38,7 @@ after installation. Run the following command in your command prompt to remove
 the installation from your system:
 
 ```bash
-$ sudo xargs rm < install_manifest.txt
+$ xargs rm < install_manifest.txt
 ```
 
 In case you lost `install_manifest.txt`, this is a list of files that are

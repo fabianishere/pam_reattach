@@ -26,7 +26,7 @@ commands into your command prompt in the directory in which you intend to build
 the module:
 
 ```sh
-$ cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr <PATH-TO-SOURCE>
+$ cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local <PATH-TO-SOURCE>
 $ make
 $ sudo make install
 ```

@@ -22,9 +22,17 @@ Make sure you have the module installed. For further information, see
 `reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
 
 ## Installation
-The module is built using [CMake](https://cmake.org). Enter the following
-commands into your command prompt in the directory in which you intend to build
-the module:
+The module is available in my personal Homebrew repository. Use the following
+command to install it:
+
+```bash
+brew install fabianishere/personal/pam_reattach
+```
+
+### Manual
+Alternatively, you may manually build the module. The module is built
+using [CMake](https://cmake.org). Enter the following commands into your
+command prompt in the directory in which you intend to build the module:
 
 ```bash
 $ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local <PATH-TO-SOURCE>

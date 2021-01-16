@@ -44,6 +44,9 @@ command to install it:
 $ brew install fabianishere/personal/pam_reattach
 ```
 
+When homebrew is not installed in /usr/local (e.g. on M1 macs where it is installed in /opt/homebrew) make shure to specify the full path to the module in your pam service file.
+
+The line should read like "`auth     optional     /opt/homebrew/lib/pam/pam_reattach.so`" then.
 
 ## Building 
 Alternatively, you may manually build the module. The module is built using [CMake 3](https://cmake.org). Enter the following commands into your

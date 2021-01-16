@@ -33,8 +33,13 @@ auth     sufficient   pam_tid.so
 ...
 ```
 
-Make sure you have the module installed. For further information, see
-`reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
+Make sure you have the module installed. Note that when the module is not installed in `/usr/lib/pam` or `/usr/local/lib/pam` (e.g., on M1 Macs where Homebrew is installed in `/opt/homebrew`), you must specify the full path to the module in the PAM service file as shown below:  
+```
+auth     optional     /opt/homebrew/lib/pam/pam_reattach.so
+auth     sufficient   pam_tid.so
+...
+```
+For further information, see `reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
 
 ## Installation
 The module is available in my personal Homebrew repository. Use the following
@@ -43,7 +48,6 @@ command to install it:
 ```bash
 $ brew install fabianishere/personal/pam_reattach
 ```
-
 
 ## Building 
 Alternatively, you may manually build the module. The module is built using [CMake 3](https://cmake.org). Enter the following commands into your

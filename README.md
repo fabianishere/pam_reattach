@@ -58,6 +58,13 @@ $ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local <PATH-
 $ make
 ```
 
+To create a universal binary for use with both Apple Silicon and x86 (e.g. for Rosetta support), use:
+
+```bash
+$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" <PATH-TO-SOURCE>
+$ make
+```
+
 #### Manual Installation
 Then, to install the module, simply run the following command:
 ```bash

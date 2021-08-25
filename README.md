@@ -49,6 +49,12 @@ command to install it:
 $ brew install fabianishere/personal/pam_reattach
 ```
 
+You can also install this module with MacPorts using the following command:
+
+```bash
+$ sudo port install pam-reattach
+```
+
 ## Building 
 Alternatively, you may manually build the module. The module is built using [CMake 3](https://cmake.org). Enter the following commands into your
 command prompt in the directory in which you intend to build the module:

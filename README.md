@@ -42,11 +42,10 @@ auth     sufficient   pam_tid.so
 For further information, see `reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
 
 ## Installation
-The module is available in my personal Homebrew repository. Use the following
-command to install it:
+The module is available via Homebrew. Use the following command to install it:
 
 ```bash
-$ brew install fabianishere/personal/pam_reattach
+$ brew install pam-reattach
 ```
 
 You can also install this module with MacPorts using the following command:

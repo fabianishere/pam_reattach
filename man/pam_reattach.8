@@ -20,7 +20,7 @@
 .\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 .\" OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 .\" THE SOFTWARE.
-.Dd August 14, 2018
+.Dd May 6, 2022
 .Dt pam_reattach 8
 .Os
 .Sh NAME
@@ -35,6 +35,17 @@ pam_reattach
 .Sh DESCRIPTION
 The reattach authentication module is used to move the next authentication
 modules to the correct, per-session, bootstrap namespace.
+
+The following options may be passed to this authentication module:
+.Bl -tag -width ".Cm default_principal"
+.It Cm allow_ssh
+Disable detection of probable SSH sessions. By default this module will be
+becom a no-op when one of
+.Dv $SSH_CLIENT,
+.Dv $SSH_CONNECTION,
+or
+.Dv $SSH_TTY
+is detected in the environment.
 .Sh SEE ALSO
 .Xr pam.conf 5 ,
 .Xr pam 8

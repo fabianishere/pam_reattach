@@ -39,6 +39,13 @@ auth     optional     /opt/homebrew/lib/pam/pam_reattach.so
 auth     sufficient   pam_tid.so
 ...
 ```
+
+By default, this module will skip reattaching when the environment indicates a probable login via SSH. This is detected by the presence of any one of `$SSH_CLIENT`, `$SSH_CONNECTION`, and `$SSH_TTY`. To skip this behavior, the option `allow_ssh` can be added to the module line in your PAM configuration as shown:
+```
+auth     optional     pam_reattach.so allow_ssh
+auth     sufficient   pam_tid.so
+...
+```
 For further information, see `reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
 
 ## Installation

@@ -38,14 +38,16 @@ modules to the correct, per-session, bootstrap namespace.
 
 The following options may be passed to this authentication module:
 .Bl -tag -width ".Cm default_principal"
-.It Cm allow_ssh
-Disable detection of probable SSH sessions. By default this module will be
-becom a no-op when one of
-.Dv $SSH_CLIENT,
-.Dv $SSH_CONNECTION,
+.It Cm ignore_ssh
+Detect and ignore probable SSH sessions. This helps prevent erroneously
+prompting for a touch when SSH and a terminal multiplexer like 
+.Xr tmux 1
+is in use. This detection is based on the presence of
+.Dv $SSH_CLIENT ,
+.Dv $SSH_CONNECTION ,
 or
 .Dv $SSH_TTY
-is detected in the environment.
+in the environment.
 .Sh SEE ALSO
 .Xr pam.conf 5 ,
 .Xr pam 8

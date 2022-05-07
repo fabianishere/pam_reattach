@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <pwd.h>
@@ -33,15 +34,27 @@
 
 #include <reattach.h>
 
+const char *ssh_env_vars[] = {"SSH_CLIENT", "SSH_CONNECTION", "SSH_TTY"};
+
 PAM_EXTERN int
 pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-	int err;
-	const char *username;
+	int err, i;
+	const char *env, *username;
 	char buffer[2 * PATH_MAX];
 	struct passwd *pwd;
 	struct passwd pwdbuf;
 	uid_t uid;
+
+	/* Ignore probable SSH sessions unless configured otherwise */
+	if (!openpam_get_option(pamh, "allow_ssh")) {
+		for (i = 0; i < sizeof(ssh_env_vars); i++) {
+			if ((env = getenv(ssh_env_vars[i])) != NULL && strlen(env)) {
+				openpam_log(PAM_LOG_ERROR, "Skipping pam_reattach because $%s is present", ssh_env_vars[i]);
+				return PAM_IGNORE;
+			}
+		}
+	}
 
 	/* Get the username (and UID) */
 	if ((err = pam_get_user(pamh, &username, NULL)) != PAM_SUCCESS) {

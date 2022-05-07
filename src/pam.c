@@ -84,3 +84,6 @@ pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
 	return PAM_IGNORE;
 }
 
+#ifdef PAM_MODULE_ENTRY
+PAM_MODULE_ENTRY("pam_reattach");
+#endif

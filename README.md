@@ -39,6 +39,15 @@ auth     optional     /opt/homebrew/lib/pam/pam_reattach.so
 auth     sufficient   pam_tid.so
 ...
 ```
+
+The `pam_tid` module will try to avoid prompting for a touch when connected via SSH or another remote login method. However, there are situations (e.g. use of tmux and screen) where the current tty may be spawned by a remote session but not detected as such by `pam_tid`. To help mitigate this, the `ignore_ssh` option can be added to the configuration of `pam_reattach` as follows:
+```
+auth     optional     pam_reattach.so ignore_ssh
+auth     sufficient   pam_tid.so
+...
+```
+This will detect the presence of any of `$SSH_CLIENT`, `$SSH_CONNECTION`, or `$SSH_TTY` in the environment, and cause this module to become a no-op.
+
 For further information, see `reattach_aqua(3)`, `pam_reattach(8)` and `reattach-to-session-namespace(8)`.
 
 ## Installation

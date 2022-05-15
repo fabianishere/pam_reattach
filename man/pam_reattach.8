@@ -20,7 +20,7 @@
 .\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 .\" OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 .\" THE SOFTWARE.
-.Dd August 14, 2018
+.Dd May 6, 2022
 .Dt pam_reattach 8
 .Os
 .Sh NAME
@@ -35,6 +35,19 @@ pam_reattach
 .Sh DESCRIPTION
 The reattach authentication module is used to move the next authentication
 modules to the correct, per-session, bootstrap namespace.
+
+The following options may be passed to this authentication module:
+.Bl -tag -width ".Cm default_principal"
+.It Cm ignore_ssh
+Detect and ignore probable SSH sessions. This helps prevent erroneously
+prompting for a touch when SSH and a terminal multiplexer like 
+.Xr tmux 1
+is in use. This detection is based on the presence of
+.Dv $SSH_CLIENT ,
+.Dv $SSH_CONNECTION ,
+or
+.Dv $SSH_TTY
+in the environment.
 .Sh SEE ALSO
 .Xr pam.conf 5 ,
 .Xr pam 8

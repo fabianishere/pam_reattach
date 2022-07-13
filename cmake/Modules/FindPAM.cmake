@@ -8,7 +8,10 @@ find_path(PAM_INCLUDE_DIR security/pam_modules.h PATH_SUFFIXES ..)
 
 set(PAM_DEFINITIONS "-fPIC")
 
-find_library(PAM_LIBRARY NAMES pam)
+find_library(PAM_LIBRARY
+    NAMES pam
+    HINTS /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/
+)
 
 set(PAM_LIBRARIES ${PAM_LIBRARY})
 set(PAM_INCLUDE_DIRS ${PAM_INCLUDE_DIR})
@@ -24,4 +27,3 @@ mark_as_advanced(PAM_INCLUDE_DIR PAM_LIBRARY)
 add_library(pam SHARED IMPORTED GLOBAL)
 set_property(TARGET pam PROPERTY IMPORTED_LOCATION ${PAM_LIBRARY})
 set_property(TARGET pam PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${PAM_INCLUDE_DIRS})
-

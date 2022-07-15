@@ -65,24 +65,30 @@ $ sudo port install pam-reattach
 
 ## Building 
 Alternatively, you may manually build the module. The module is built using [CMake 3](https://cmake.org). Enter the following commands into your
-command prompt in the directory in which you intend to build the module:
+command prompt in the project directory:
 
 ```bash
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local <PATH-TO-SOURCE>
-$ make
+$ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local
+$ cmake --build build
 ```
 
 To create a universal binary for use with both Apple Silicon and x86 (e.g. for Rosetta support), use:
 
 ```bash
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" <PATH-TO-SOURCE>
-$ make
+$ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" 
+$ cmake --build build
+```
+
+If CMake is not able to find `libpam` automatically (e.g., on Nix), you may need to specify the prefix path manually:
+```bash
+$ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DCMAKE_PREFIX_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/"
+$ cmake --build build
 ```
 
 #### Manual Installation
 Then, to install the module, simply run the following command:
 ```bash
-$ make install
+$ cmake --install build
 ```
 Make sure you **keep** the generated `install_manifest.txt` file in the build folder after installation. 
 
@@ -90,7 +96,7 @@ Make sure you **keep** the generated `install_manifest.txt` file in the build fo
 Run the following command in your command prompt to remove the installation from your system:
 
 ```bash
-$ xargs rm < install_manifest.txt
+$ xargs rm < build/install_manifest.txt
 ```
 
 In case you lost `install_manifest.txt`, this is the list of files that are installed:

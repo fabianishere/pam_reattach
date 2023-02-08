@@ -10,5 +10,8 @@ jobs:
       - uses: jwlawson/actions-setup-cmake@v1.13
         with:
           cmake-version: 3.x
-      - run: cmake
+      - run: mkdir build
+      - run: cmake ..
+        working-directory: build
       - run: make VERBOSE=1
+        working-directory: build

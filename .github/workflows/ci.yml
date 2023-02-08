@@ -7,6 +7,5 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - run: mkdir build
-      - run: cd build
-      - run: cmake .. && make VERBOSE=1
+      - run: cmake
+      - run: make VERBOSE=1

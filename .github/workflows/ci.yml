@@ -1,17 +1,15 @@
 name: CI
 
-on: push
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   build:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: jwlawson/actions-setup-cmake@v1.13
-        with:
-          cmake-version: 3.x
-      - run: mkdir build
-      - run: cmake ..
-        working-directory: build
-      - run: make VERBOSE=1
-        working-directory: build
+      - run: cmake -S . -B build
+      - run: cmake --build build -v

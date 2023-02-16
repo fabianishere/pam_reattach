@@ -1,5 +1,5 @@
 pam\_reattach
-[![Build Status](https://travis-ci.org/fabianishere/pam_reattach.svg?branch=master)](https://travis-ci.org/fabianishere/pam_reattach)
+[![CI](https://github.com/fabianishere/pam_reattach/actions/workflows/ci.yml/badge.svg)](https://github.com/fabianishere/pam_reattach/actions/workflows/ci.yml)
 =============
 This is a PAM module for reattaching to the authenticating user's per-session
 bootstrap namespace on macOS. 
